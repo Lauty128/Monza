@@ -17,9 +17,10 @@
     app.use(cors({origin:true}))
 
 //----- Routes
-    app.get('/', (req,res)=>{
-        res.send("MONZA")
-    })
+    import { apiRouter } from "./routes/api.routes.js"; 
+    import { pagesRouter } from "./routes/pages.routes.js";
+    app.use("/", pagesRouter)
+    app.use("/api", apiRouter)
 
 //----- Listen
     app.listen(PORT, ()=>{
