@@ -1,0 +1,6 @@
+# folderes
+node_modules
+migration
+
+# files
+.env
