@@ -1,6 +1,7 @@
 # folderes
 node_modules
 migration
+minify
 
 # files
 .env

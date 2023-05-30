@@ -2,19 +2,26 @@
     import express from "express";
     import cors from 'cors';
     import morgan from 'morgan'
-    import { environment } from "./config/env.js";
-
+    import { environment, port } from "./config/env.js";
+    import path from 'path';
+    import * as url from 'url';
 
 //----- Config
     if(environment == 'dev') morgan('dev') 
     const app = express()
-    const PORT = process.env.PORT || 4000
+    const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
+    const PORT = port || 4000
+
+//------ Template Engine
+    app.set('view engine', 'ejs');
+    app.set('views', './src/views')
 
 //----- Middlewares
     app.use(morgan('dev'))
     app.use(express.json())
     app.use(express.urlencoded({ extended: false }))
     app.use(cors({origin:true}))
+    app.use(express.static(path.join(__dirname, '/public'))) // Public folder config
 
 //----- Routes
     import { apiRouter } from "./routes/api.routes.js"; 
