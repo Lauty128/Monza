@@ -25,7 +25,7 @@ export const User = sequelize.define('user',{
     phone: DataTypes.STRING(20),
     rol: DataTypes.STRING(10),
     user: DataTypes.STRING(15),
-    password: DataTypes.STRING(20),
+    password: DataTypes.STRING,
 })
 
 //----------- Relations
