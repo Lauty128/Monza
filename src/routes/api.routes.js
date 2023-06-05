@@ -1,36 +1,39 @@
+//------------- Dependencies
     import express from "express";
 
-//---- Config
+//------------- Config
     const router = express.Router()
 
-//--- Middlewares
+//------------- Controllers
+    import Controllers from "../controllers/api.controller.js";
+
+//------------- Middlewares
 
 //-------------------- Routes
 //-------- VEHICLES
     //- GET
-    router.get("/", (req,res)=>{
-        res.send("URL => /api/vehicles (GET)")
-    })
-    router.get('/csv', (req,res)=>{
-        res.send("URL => /api/csv (GET)")
-    })
-    router.get("/:id", (req,res)=>{
-        res.send("URL => /api/vehicles/:id (GET)")
-    })
+    router.get("/vehicles", Controllers.vehicles_findAll )
+    router.get("/vehicles/:id", Controllers.vehicles_findOne)
+    
+    router.get('/csv', Controllers.generateCSV )
 
     //- POST
-    router.post("/", (req,res)=>{
+    router.post("/vehicles", (req,res)=>{
         res.send("URL => /api/vehicles (POST)")
     })
 
     //- DELETE
-    router.delete("/:id", (req,res)=>{
-        res.send("URL => /api/vehicles/:id (DELETE)")
-    })
+    router.delete("/vehicles/:id", Controllers.vehicles_delete )
 
     //- PUT
-    router.put("/:id", (req,res)=>{
-        res.send("URL => /api/vehicles/:id (PUT)")
-    })
+    router.put("/vehicles/:id", Controllers.vehicles_modify)
+
+//-------- MARKS
+    //- GET
+    router.get("/marks", Controllers.marks_findAll )
+
+//-------- USERS
+    //- GET
+    router.get("/users", Controllers.users_findAll )
 
 export { router as apiRouter }
