@@ -15,7 +15,7 @@
 //--- Routes
     router.get("/", pagesControllers.home)
 
-    router.get("/view/:id", pagesControllers.view)
+    router.get("/:id", pagesControllers.view)
     router.get("/edit/:id", pagesControllers.edit)
     router.get("/create", pagesControllers.create)
 

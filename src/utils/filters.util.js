@@ -6,3 +6,12 @@ export function defineWhere(where, queries){
 
     return where
 }
+
+export const sortTypes = {
+    "pUP": ['price', 'ASC'],
+    "pDOWN": ['price', 'DESC'],
+    "mUP": ['model', 'ASC'],
+    "mDOWN": ['model', 'DESC'],
+    "dateUP": ['createdAt', 'ASC'],
+    "dateDOWN": ['createdAt', 'DESC'] 
+}

@@ -1,20 +1,22 @@
 //------- Dependencies
     import bcrypt from 'bcrypt';
     import jwt from 'jsonwebtoken';
+    import path from 'path';
+    import * as url from 'url';
 
 //------- Models
-    import { User } from "../models/users.model.js";
+import { User } from "../models/users.model.js";
 
+//------- Config
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 //------- Controllers
 const home = (req,res)=>{
-    res.send("HOME")
+    res.sendFile( path.join(__dirname + '../views/index.html'))
 }
 
 const view = (req,res)=>{
-    console.log(req.params.id);
-
-    res.send("VEHICLE VIEWER")
+    res.sendFile( path.join(__dirname + '../views/index.html'))
 }
 
 const edit = (req,res)=>{

@@ -17,10 +17,9 @@
     app.set('views', './src/views')
 
 //----- Middlewares
-    app.use(morgan('dev'))
     app.use(express.json())
     app.use(express.urlencoded({ extended: false }))
-    app.use(cors({origin:true}))
+    app.use(cors({origin:['http://localhost:5173']}))
     app.use(express.static(path.join(__dirname, '/public'))) // Public folder config
 
 //----- Routes
