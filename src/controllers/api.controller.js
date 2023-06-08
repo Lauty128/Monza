@@ -5,24 +5,32 @@
     const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 //------- Service
-    import Service from "../services/api.service.js"
+    import vehiclesService from '../services/vehicles.service.js';
+    import complementaryService from '../services/complementary.service.js';
 
 //------- Utils
-    import { defineWhere } from "../utils/filters.util.js"
+    import { defineWhere, sortTypes } from "../utils/filters.util.js"
     import { readData } from '../utils/vehicles.util.js';
     import { generateColumn } from '../utils/table.util.js';
 
 
-//----------------- Vehicles
+
+//----------------- VEHICLES CONTROLLERS
 const vehicles_findAll = async (req,res)=>{
+    //--- Where and attributtes
     const where = defineWhere({}, req.query)
     const attributes = ['id_vehicle','version','image','price','model','type','traction','km']
-
+    
+    //--- Ordering
+    const order = []
+    if(req.query.order) order[0] = sortTypes[req.query.order]
+    
+    //--- Pagination
     const { page = 0, size = 6 } = req.query
     const pagination = { offset: (+page) * (+size), limit: +size }
-
-    const service = new Service('vehicle')
-    const data = await service.findAll({ where, attributes, pagination })
+    
+    //--- Service
+    const data = await vehiclesService.findAll({ where, attributes, pagination, order })
 
     res.json(data)
 }
@@ -30,8 +38,7 @@ const vehicles_findAll = async (req,res)=>{
 const vehicles_findOne = async (req,res) => {
     const where = { id_vehicle: req.params.id }
 
-    const service = new Service('vehicle')
-    const data = await service.findOne(where)
+    const data = await vehiclesService.findOne(where)
 
     res.json(data)
 }
@@ -57,45 +64,50 @@ const vehicles_submit = async (req,res) => {
 
 const vehicles_modify = async (req,res) => {
     const { id } = req.params
-    const service = new Service('vehicle')
 
-    const modifiedData = await service.modify(id, req.body)
+    const modifiedData = await vehiclesService.modify(id, req.body)
 
     res.json(modifiedData)
 }
 
 const vehicles_delete = async (req,res) => {
     const where = { id_vehicle: req.params.id }
-    const service = new Service('vehicle')
-    const deletedData = await service.deleteVehicle(where)
+    const deletedData = await vehiclesService.destroy(where)
 
     res.json(deletedData)
 }
 
-//----------------- Users
+
+//----------------- MARKS CONTROLLERS
 const marks_findAll = async(req,res) => {
-    const pagination = { offset: 0, limit: 15 }
-
-    const service = new Service('mark')
-    const data = await service.findAll({ pagination, attributes: ['id_mark', 'name'] })
-
+    const data = await complementaryService.marks_findAll ({ attributes: ['id_mark', 'name'] })
+    
     res.json(data)
 }
 
-//----------------- Mark
+
+//----------------- USERS CONTROLLERS
 const users_findAll = async(req,res) => {
     const attributes = (req.query.type == 'full')
         ? ['id_user','name','subname','city','image','phone','rol']
         : ['id_user','name','subname']
-    const pagination = { offset: 0, limit: 10 }
 
-    const service = new Service('user')
-    const data = await service.findAll({ pagination, attributes })
+    const data = await complementaryService.users_findAll({ attributes })
+
+    res.json(data)
+}
+
+//----------------- TAGS CONTROLLERS
+const tags_findAll = async(req,res) => {
+    const attributes = ['id_tag','name']
+
+    const data = await complementaryService.tags_findAll({ attributes })
 
     res.json(data)
 }
 
 
+//-------------- EXPORT
 export default {
     vehicles_findAll,
     vehicles_findOne,
@@ -104,5 +116,6 @@ export default {
     vehicles_modify,
     vehicles_delete,
     marks_findAll,
-    users_findAll
+    users_findAll,
+    tags_findAll
 }

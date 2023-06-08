@@ -36,4 +36,8 @@
     //- GET
     router.get("/users", Controllers.users_findAll )
 
+//-------- TAGS
+    //- GET
+    router.get("/tags", Controllers.tags_findAll )
+
 export { router as apiRouter }
