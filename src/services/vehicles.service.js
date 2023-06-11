@@ -63,7 +63,23 @@ async function findOne(where={}){
 }
 
 async function create(body){
+    try{
+        const data = await Vehicle.create(body)
+        if(!data) throw new Error("Fallo la subida de los datos")
 
+        return {
+            message:"Datos subidos con exito",
+            status: 201,
+            data
+        }
+    }
+    catch(error){
+        return {
+            message:"Ocurrio un error mientras se subian los datos",
+            status:500,
+            error
+        }
+    }
 }
 
 async function modify(id, body){
@@ -139,6 +155,7 @@ async function destroy(where){
 export default {
     findAll,
     findOne,
+    create,
     modify,
     destroy
 };

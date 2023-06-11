@@ -12,6 +12,7 @@
     import { defineWhere, sortTypes } from "../utils/filters.util.js"
     import { readData } from '../utils/vehicles.util.js';
     import { generateColumn } from '../utils/table.util.js';
+    import cloudinary from '../config/cloudinary.js'
 
 
 
@@ -59,7 +60,37 @@ const generateCSV = async (req,res) => {
 }
 
 const vehicles_submit = async (req,res) => {
+    try{
+        const image = await cloudinary.upload(req.files.image[0].path)
 
+        let extra_images = []
+        if(req.files.images && req.files.images.length > 0){
+            for (let index = 0; index < req.files.images.length; index++) {
+                const data = await cloudinary.upload(req.files.images[index].path)
+                extra_images.push(data.secure_url)
+            }
+        }
+        else throw new Error("No se ingreso ninguna imagen secundaria")
+
+        req.body.traction ||= 'Normal'
+        //req.body.extra = !!req.body.extra ? req.body.extra.split('\r\n') : []
+        const body = {
+            ...req.body, 
+            image : image.secure_url, 
+            extra_images: extra_images.join(',')
+        }
+        
+        const submit = await vehiclesService.create(body)
+        res.status(submit.status).json(submit)
+    }
+    catch(error){
+        console.log(error);
+        res.status(500).json({ 
+            msg:"Ocurrio un error al subir las imagenes",
+            error,
+            status:500
+        })
+    }
 }
 
 const vehicles_modify = async (req,res) => {
