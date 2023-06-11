@@ -61,6 +61,7 @@ const generateCSV = async (req,res) => {
 
 const vehicles_submit = async (req,res) => {
     try{
+        if(!req.files.image) throw new Error("No se ingreso una imagen principal")
         const image = await cloudinary.upload(req.files.image[0].path)
 
         let extra_images = []
@@ -86,7 +87,7 @@ const vehicles_submit = async (req,res) => {
     catch(error){
         console.log(error);
         res.status(500).json({ 
-            msg:"Ocurrio un error al subir las imagenes",
+            message:"Ocurrio un error al subir las imagenes",
             error,
             status:500
         })
