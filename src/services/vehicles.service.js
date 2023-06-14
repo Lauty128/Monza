@@ -5,13 +5,15 @@ import { Tag, Vehicle_Tag } from "../models/tags.model.js"
 import { sequelize } from "../config/sequelize.js";
 
 
-async function findAll({ where={}, order=[], pagination={}, attributes=[] }){
+async function findAll({ where={}, order=[], pagination, attributes }){
+    //--- Filters
     const include = [
         { model: Mark, attributes:['id_mark','name'] },
         { model:User, attributes:['name','subname','id_user'] }
     ]
 
     try{
+        //--- Query to ORM
         const { count, rows } = await Vehicle.findAndCountAll({
             where,
             attributes,
@@ -19,6 +21,7 @@ async function findAll({ where={}, order=[], pagination={}, attributes=[] }){
             order,
             ...pagination
         })
+        //--- If count is 0, then the request is OK but the vehicle don't exist. Therefore the response status would be 204
         const status = (count > 0) ? 200 : 204
         
         return {
@@ -37,6 +40,7 @@ async function findAll({ where={}, order=[], pagination={}, attributes=[] }){
 }
 
 async function findOne(where={}){
+    //--- Filters
     const include = [
         { model: Mark, attributes:['name'] },
         { model:User, attributes:['name','subname','id_user'] },
@@ -45,6 +49,7 @@ async function findOne(where={}){
     // This <include> is longer, because when searching for a single vehicle, we want to get more detailed data
 
     try{
+        //--- Query to ORM
         const data = await Vehicle.findOne({
             where,
             include
@@ -64,6 +69,7 @@ async function findOne(where={}){
 
 async function create(body){
     try{
+        //--- Query to ORM
         const data = await Vehicle.create(body)
         if(!data) throw new Error("Fallo la subida de los datos")
 
@@ -84,6 +90,7 @@ async function create(body){
 
 async function modify(id, body){
     try{
+        //--- Filters
         const where = { id_vehicle: id }
         const vehicleData = await Vehicle.findOne({ where })
 

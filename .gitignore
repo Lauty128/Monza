@@ -5,3 +5,4 @@ minify
 
 # files
 .env
+netlify.toml

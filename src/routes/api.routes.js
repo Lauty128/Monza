@@ -15,7 +15,7 @@
 //------------- Middlewares
 
 //-------------------- Routes   
-//-------- VEHICLES
+//-------- VEHICLES ----------------
     //- GET
     router.get("/vehicles", Controllers.vehicles_findAll)
     router.get("/vehicles/:id", Controllers.vehicles_findOne)
@@ -31,15 +31,15 @@
     //- PUT
     router.put("/vehicles/:id", Controllers.vehicles_modify)
 
-//-------- MARKS
+//---------- MARKS ----------------
     //- GET
     router.get("/marks", Controllers.marks_findAll)
 
-//-------- USERS
+//-------- USERS ------------------
     //- GET
     router.get("/users", Controllers.users_findAll)
 
-//-------- TAGS
+//-------- TAGS --------------------
     //- GET
     router.get("/tags", Controllers.tags_findAll)
 
