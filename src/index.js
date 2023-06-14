@@ -2,7 +2,7 @@
     import express from "express";
     import cors from 'cors';
     import morgan from 'morgan'
-    import { environment, port } from "./config/env.js";
+    import { environment, port, client_url } from "./config/env.js";
 
 //----- Config
     if(environment == 'dev') morgan('dev') 
@@ -13,7 +13,7 @@
 //----- Middlewares
     app.use(express.json())
     app.use(express.urlencoded({ extended: false }))
-    app.use(cors({origin:['http://localhost:5173']}))
+    app.use(cors())
 
 //----- Routes
     import { apiRouter } from "./routes/api.routes.js"; 

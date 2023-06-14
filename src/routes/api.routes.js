@@ -1,6 +1,7 @@
 //------------- Dependencies
     import express from "express";
     import multer from "../config/multer.js";
+    import { validate } from "../middlewares/validate.js";
 
 //------------- Config
     const router = express.Router()
@@ -13,6 +14,7 @@
     import Controllers from "../controllers/api.controller.js";
 
 //------------- Middlewares
+    router.use(validate)
 
 //-------------------- Routes   
 //-------- VEHICLES ----------------
