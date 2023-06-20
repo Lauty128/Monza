@@ -2,7 +2,7 @@
     import express from "express";
     import cors from 'cors';
     import morgan from 'morgan'
-    import { environment, port, client_url } from "./config/env.js";
+    import { environment, port } from "./config/env.js";
 
 //----- Config
     if(environment == 'dev') morgan('dev') 

@@ -1,6 +1,6 @@
 export function generateColumn(column){
     const urlMonza = 'https://www.facebook.com/MonzaAutomotor'
-    console.log(column);
+    
     return `\n"${column.id_vehicle}","${column.mark.name + " " + column.version }","${generateDescription(column) }","in stock","1","used","${column.price} ARS","${urlMonza}","${column.image}","${column.extra_images}","Vehicle","${column.sale_price || ''}","888"`
 }
 

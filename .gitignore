@@ -3,6 +3,8 @@ node_modules
 migration
 minify
 
+
 # files
 .env
 netlify.toml
+excel/monza-list

@@ -1,6 +1,6 @@
 export const validate = (req,res,next) => {
-    //console.log(req.headers.origin);
-    if(req.headers.origin.includes('https://storied-kataifi-d0b4f5.netlify.app')){
+    
+    if(req.headers.referer && req.headers.referer.includes('storied-kataifi-d0b4f5.netlify.app')){
         return next()
     }
 

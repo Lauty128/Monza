@@ -121,7 +121,6 @@ const vehicles_delete = async (req,res) => {
     res.json(deletedData)
 }
 
-
 //----------------- MARKS CONTROLLERS
 const marks_findAll = async(req,res) => {
     //--- Services
@@ -129,7 +128,6 @@ const marks_findAll = async(req,res) => {
     
     res.json(data)
 }
-
 
 //----------------- USERS CONTROLLERS
 const users_findAll = async(req,res) => {
